@@ -41,14 +41,14 @@ function lookup(req,res){
 }
 
 function extUpdate(req,res){
-    appShared = req.params.d
+    appShared = req.query.d
     t3();
     console.log(`update for PUBLIC appShared ${appShared}`);
     res.send('OKAY');
 }
 
 function post(req,res){
-    appShared = req.params.d
+    appShared = req.query.d
     console.log(`update for appShared ${appShared}`);
     res.send('OKAY');
 }
