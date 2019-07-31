@@ -10,11 +10,16 @@ const internalApp = express()
 const internalPort = 4040
 
 let appShared = 'lolcatz'
-const myip = os.networkInterfaces()['eth0'][0].address
+try {
+    const myip = os.networkInterfaces()['eth0'][0].address
+} catch {
+    const myip = 'windows '
+}
+
 
 publicApp.get('/', lookup);
 publicApp.get('/set',extUpdate);
-internalApp.get('/', intApp)
+//internalApp.get('/', intApp)
 internalApp.get('/update', post)
 
 publicApp.listen(externalPort, onStart);
@@ -34,7 +39,7 @@ function lookup(req,res){
     })
 }
 
-function intApp(req,res){
+function extUpdate(req,res){
     appShared = req.params.d
     t3();
     console.log(`update for PUBLIC appShared ${appShared}`);
