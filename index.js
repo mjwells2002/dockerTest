@@ -19,10 +19,11 @@ try {
      myip = 'windows '
 }
 
-setInterval(() => {
+let y = setInterval(() => {
     if(ready){
         publicApp.listen(externalPort, onStart);
         internalApp.listen(internalPort, onStart);
+        clearInterval(y);
     }
 },100);
 publicApp.get('/', lookup);
