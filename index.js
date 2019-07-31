@@ -70,10 +70,12 @@ function t3(){
 
             } else {
                 //not only present node
-                request(`http://${ip}:${internalPort}/update?d=${appShared}`, function (error, response, body) {
+                request(`http://${x}:${internalPort}/update?d=${appShared}`, function (error, response, body) {
                 
                 });
             }
         })
     })
 }
+
+
