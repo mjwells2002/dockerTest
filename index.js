@@ -3,17 +3,18 @@ var dns = require('dns');
 const os = require('os')
 const request = require('request');
 
-const publicApp = express()
+const publicApp = express()k
 const externalPort = 3000
 
 const internalApp = express()
 const internalPort = 4040
 
 let appShared = 'lolcatz'
+const myip
 try {
-    const myip = os.networkInterfaces()['eth0'][0].address
+    myip = os.networkInterfaces()['eth0'][0].address
 } catch {
-    const myip = 'windows '
+     myip = 'windows '
 }
 
 
