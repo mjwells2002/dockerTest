@@ -10,7 +10,7 @@ const internalApp = express()
 const internalPort = 4040
 
 let appShared = 'lolcatz'
-const myip
+let myip
 try {
     myip = os.networkInterfaces()['eth0'][0].address
 } catch {
