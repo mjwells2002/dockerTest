@@ -11,20 +11,26 @@ const internalPort = 4040
 
 let appShared = 'lolcatz'
 let myip
+let ready = false;
+
 try {
     myip = os.networkInterfaces()['eth0'][0].address
 } catch {
      myip = 'windows '
 }
 
-
+setInterval(() => {
+    if(ready){
+        publicApp.listen(externalPort, onStart);
+        internalApp.listen(internalPort, onStart);
+    }
+},100);
 publicApp.get('/', lookup);
 publicApp.get('/set',extUpdate);
-//internalApp.get('/', intApp)
+internalApp.get('/', intApp)
 internalApp.get('/update', post)
 
-publicApp.listen(externalPort, onStart);
-internalApp.listen(internalPort, onStart);
+
 
 function onStart() {
     console.log('startred')
@@ -45,6 +51,9 @@ function extUpdate(req,res){
     t3();
     console.log(`update for PUBLIC appShared ${appShared}`);
     res.send('OKAY');
+}
+function intApp(req,res){
+    res.send(appShared)
 }
 
 function post(req,res){
@@ -77,5 +86,39 @@ function t3(){
         })
     })
 }
+let out = []    
+function t4(){
+    t2(arr => {
+        arr.forEach(x => {
+            if (x == myip){
+
+            } else {
+                //not only present node
+                request(`http://${x}:${internalPort}/`, function (error, response, body) {
+                out.push(body);
+                });
+            }
+        })
+    })
+}
 
 
+
+setTimeout(() => {
+    out.forEach(d => {
+        if (!ready){
+            if (d == appShared ){
+                //default value
+            } else {
+                appShared = d
+                console.log(`stating node got update ${appShared}`)
+                ready= true;
+            }
+        }
+        
+    })
+    //ready = true;
+},1000);
+let x = setTimeout(() => {
+    ready = true;
+},2000);
